@@ -48,25 +48,7 @@
                     
                      <span class="ui-separator"> <span
                             class="ui-icon ui-icon-grip-dotted-vertical" />
-                    </span>
-                    <!-- botão para deletar uma sugestão  -->
-                    <p:commandLink 
-                        title="Excluir"
-                        rendered="#{request.isUserInRole('ROLE_USUARIO_VIP')}"
-                        action="#{sugestaoBean.excluir()}"
-                        process="@this"
-                        update="tabela-vtr messages toolbar"
-                        disabled="#{sugestaoBean.sugestaoSelecionada ==null}" >
-
-                        <p:confirm       icon="ui-icon-alert" 
-                                         header="Confirmação de Exclusão"
-                                         message="Tem certeza que deseja excluir uma sugestão ? "/>
-
-                        <h:graphicImage library="imagens" name="excluir.png"
-                                        style="width: 30px " />
-
-                    </p:commandLink >
-
+                    </span>              
 
 
 
@@ -134,12 +116,15 @@
                 <p:ajax event="rowSelect"  update=":fr:toolbar" />
                 <p:ajax event="rowUnselect"  update=":fr:toolbar"/>
                 
-                <p:column width="10" style="text-align: center;" rendered="#{request.isUserInRole('ROLE_USUARIO_VIP')}">
+                <p:column width="50" 
+                          style="text-align: center;" 
+                          rendered="#{request.isUserInRole('ROLE_USUARIO_VIP')}"
+                          headerText="Excluir">
                     <p:commandLink action="#{sugestaoBean.excluir1()}"
                                    update="tabela-vtr"
                                    onclick="if (!confirm('Confirma a exclusão da Sugestão ?'))
                                                return false;">
-                        <h:graphicImage library="imagens" name="excluir16.png"
+                                <h:graphicImage library="imagens" name="excluir.png" width="25" height="20"
                                         style="border:2" />
                         <f:setPropertyActionListener target="#{sugestaoBean.sugestao}"
                                                      value="#{sugestao}" />
