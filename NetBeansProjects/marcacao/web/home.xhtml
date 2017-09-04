@@ -6,7 +6,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <ui:define name="Titulo">Gerenciamento de Sugestões</ui:define>
+    <ui:define name="Titulo">Agendamento</ui:define>
     <ui:define name="corpo">
 
         <h:form id="fr">
@@ -122,7 +122,7 @@
                           headerText="Excluir">
                     <p:commandLink action="#{sugestaoBean.excluir1()}"
                                    update="tabela-vtr"
-                                   onclick="if (!confirm('Confirma a exclusão da Sugestão ?'))
+                                   onclick="if (!confirm('Confirma a exclusão da Consulta ?'))
                                                return false;">
                                 <h:graphicImage library="imagens" name="excluir.png" width="25" height="20"
                                         style="border:2" />
