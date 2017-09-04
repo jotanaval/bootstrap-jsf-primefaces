@@ -55,4 +55,9 @@ public class SugestaoRepository extends GenericDAO<Sugestao>{
               .getResultList();
     }
     
+    public void excluir(Sugestao sugestao) {
+		Sugestao sugestaodb = manager.find(Sugestao.class, sugestao.getId());// precisa desatachar o objeto para que a exlusão ocorra
+		this.manager.remove(sugestaodb);
+	}
+    
 }

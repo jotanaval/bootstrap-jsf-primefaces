@@ -133,6 +133,18 @@
 
                 <p:ajax event="rowSelect"  update=":fr:toolbar" />
                 <p:ajax event="rowUnselect"  update=":fr:toolbar"/>
+                
+                <p:column width="10" style="text-align: center;" rendered="#{request.isUserInRole('ROLE_USUARIO_VIP')}">
+                    <p:commandLink action="#{sugestaoBean.excluir1()}"
+                                   update="tabela-vtr"
+                                   onclick="if (!confirm('Confirma a exclusão da Sugestão ?'))
+                                               return false;">
+                        <h:graphicImage library="imagens" name="excluir16.png"
+                                        style="border:2" />
+                        <f:setPropertyActionListener target="#{sugestaoBean.sugestao}"
+                                                     value="#{sugestao}" />
+                    </p:commandLink>
+                </p:column>
 
                 <f:facet name="header">
                     <div style="color: blue; font: bold;">Lista de Sugestões</div>

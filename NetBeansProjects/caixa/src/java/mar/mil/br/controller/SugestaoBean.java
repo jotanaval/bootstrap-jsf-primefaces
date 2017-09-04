@@ -109,6 +109,13 @@ public class SugestaoBean {
     public String editar(){
         return "addViatura";
     }
+    // metodo criado para excluir a sugestão na linha sem ser selecionada
+    public String excluir1() {
+		
+		sugestaoRepository.excluir(this.sugestao);
+		this.findAll = null;
+		return null;
+	}
     public void excluir(){
         this.sugestaoRepository.delete(sugestaoSelecionada.getId());
         sugestaoSelecionada = null;
