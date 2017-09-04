@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<ui:composition template="/templates/interna.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="Titulo">Gerenciamento de Sugestões</ui:define>
+    <ui:define name="corpo">
+
+        <h:form id="fr">
+            <p:growl id="messages"/>                
+            <p:toolbar id="toolbar">
+                <f:facet name="left">
+                    <!-- botão para chamar o modal de inserção de nova sugestão -->
+                    <p:commandButton value="Nova"
+                                     icon="ui-icon-pencil" 
+                                     action="#{sugestaoBean.novaSituacao()}"
+                                     oncomplete="PF('cadastro-dialog').show();" 
+                                     process="@this" 
+                                     update="dialog-painel ">                 
+                        <p:resetInput target="fr:dialog-painel" />
+                    </p:commandButton> 
+
+
+                </f:facet>
+                <f:facet name="right">
+
+                    <h:commandLink 
+                                   action="#{sugestaoBean.logar()}"
+                                   rendered="#{sugestaoBean.authenticated == false}"
+                                   title="Logar Sistema"
+                                   id="logarSistema"
+                                   >
+                    <h:graphicImage library="imagens" name="administrativo16.png"
+                                        style="width: 20px " />
+                    </h:commandLink> 
+
+                    <span class="ui-separator"> <span
+                            class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                        <h:commandLink 
+                                       action="#{sugestaoBean.admin}"
+                                       rendered="#{request.isUserInRole('ROLE_ADMINISTRADOR')}"
+                                   title="Usuários"
+                                   id="usuarios">
+                            <h:graphicImage library="imagens" name="loginManager.png"
+                                        style="width: 25px " />
+                         </h:commandLink>
+                                     
+                    <span class="ui-separator"> <span
+                            
+                            class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                                
+                        <p:commandLink value="Logout"
+                                       rendered="#{request.isUserInRole('ROLE_USUARIO_VIP')}"
+                                       onclick="document.location = '#{request.contextPath}/j_spring_security_logout'"
+                                       title="Sair" /> 
+
+                    <span class="ui-separator"> <span 
+                            class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                </f:facet>
+            </p:toolbar>
+            <p:separator/>
+            <!-- Tabela traz todas as sugestões existentes no banco de dados ordenadas por data
+                 o usuario com função de administrador terá a possibilidade de CRUD
+                 usuario comum poderá somente cadastrar uma sugestão
+            -->                
+            <p:dataTable var="sugestao" 
+                         value="#{sugestaoBean.findAll}" 
+                         id="tabela-vtr"
+                         paginator="true"  
+                         paginatorPosition="bottom"
+                         rows="15" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,50,100"
+                        >
+
+                
+                
+                
+               
+            </p:dataTable>
+
+
+            <!-- Dialogo para cadastro de sugestão -->
+            <p:dialog header="Nova Sugestão" 
+                      widgetVar="cadastro-dialog"  
+                      resizable="false" 
+                      closeOnEscape="true"
+                      id="dialog-painel">
+
+                <p:panelGrid columns="2" id="painel">
+
+                    <p:outputLabel value="Assunto: " for="ass" />
+                    <p:selectOneMenu value="#{sugestaoBean.sugestao.assunto}" id="ass" editable="true">
+                        <f:selectItem itemValue="Conforto" itemLabel="Conforto" />
+                        <f:selectItem itemValue="Rancho" itemLabel="Rancho" />                          
+                        <f:selectItem itemValue="Local de Trabalho" itemLabel="Local de Trabalho" />
+                        <f:selectItem itemValue="Eventos" itemLabel="Eventos" />
+
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Sugestão :" />
+                    <p:inputTextarea value="#{sugestaoBean.sugestao.sugestao}"  />  
+                </p:panelGrid>                    
+                <p:commandButton   action="#{sugestaoBean.save()}"   
+                                   value="Salvar"
+                                   icon="ui-icon-disk"
+                                   process="dialog-painel"
+                                   update="messages painel tabela-vtr" 
+                                   oncomplete="if (!args.validationFailed) PF('cadastro-dialog').hide()"/>
+
+                <!-- Este modal é para o administrador colocar as observações -->
+            </p:dialog>
+            <p:dialog header="Responder" 
+                      widgetVar="atualizar-dialog"  
+                      resizable="false" 
+                      closeOnEscape="true"
+                      id="dialog-painel-atualizar" 
+                      width= "400" >   
+
+                <p:panelGrid columns="2" id="painela" >
+
+                    <p:outputLabel value="Observação:"/>
+                    <p:inputTextarea value="#{sugestaoBean.sugestao.observacao}"/>
+
+                </p:panelGrid>                           
+                <p:commandButton   action="#{sugestaoBean.save()}"   
+                                   value="Enviar"
+                                   icon="ui-icon-circle-check"
+                                   process="dialog-painel-atualizar"
+                                   update="messages painel tabela-vtr" 
+                                   oncomplete="if (!args.validationFailed) PF('atualizar-dialog').hide()"/>
+
+            </p:dialog>
+           
+        </h:form>
+
+    </ui:define>
+</ui:composition>
