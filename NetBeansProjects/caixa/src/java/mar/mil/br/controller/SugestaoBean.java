@@ -11,8 +11,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +35,7 @@ public class SugestaoBean {
     private Sugestao sugestao = new Sugestao();
     private List<Sugestao>findAll= new ArrayList<>(); 
     private Sugestao sugestaoSelecionada;
+    private String destinoSalvar;
     //este atributo é para fazer o relacionamento na hora da gravação
    Long modeloID; 
    
@@ -51,7 +50,7 @@ public class SugestaoBean {
     public Sugestao getSugestaoSelecionada() {
         return sugestaoSelecionada;
     }
-    public void setViaturaSelecionada(Sugestao sugestaoSelecionada) {
+    public void setSugestaoSelecionada(Sugestao sugestaoSelecionada) {
         this.sugestaoSelecionada = sugestaoSelecionada;
     }
    public void novaSituacao(){
@@ -223,9 +222,7 @@ public class SugestaoBean {
         this.findAll = findAll;
     }
 
-    public void setSugestaoSelecionada(Sugestao sugestaoSelecionada) {
-        this.sugestaoSelecionada = sugestaoSelecionada;
-    }
+    
 
     public void setModeloID(Long modeloID) {
         this.modeloID = modeloID;
@@ -249,6 +246,14 @@ public class SugestaoBean {
 
     public void setRespondido(String respondido) {
         this.respondido = respondido;
+    }
+
+    public String getDestinoSalvar() {
+        return destinoSalvar;
+    }
+
+    public void setDestinoSalvar(String destinoSalvar) {
+        this.destinoSalvar = destinoSalvar;
     }
     
     

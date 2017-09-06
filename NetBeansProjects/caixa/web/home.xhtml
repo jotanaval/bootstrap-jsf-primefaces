@@ -28,23 +28,7 @@
                     <span class="ui-separator">
                         <span class="ui-icon ui-icon-grip-dotted-vertical" />
                     </span> 
-                    <!-- botão para chamar o modal de Inserção de observação  -->
-                    <p:commandLink  
-                        title="Responder"
-                        rendered="#{request.isUserInRole('ROLE_USUARIO_VIP')}"
-                        process="@this"
-                        update="dialog-painel-atualizar"
-                        disabled="#{sugestaoBean.sugestaoSelecionada==null}"
-                        oncomplete="PF('atualizar-dialog').show()" >
-
-                        <f:setPropertyActionListener 
-                            value="#{sugestaoBean.sugestaoSelecionada}"
-                            target="#{sugestaoBean.sugestao}" />
-
-                        <p:resetInput target="fr:dialog-painel-atualizar" /> 
-                        <h:graphicImage library="imagens" name="editar.png"
-                                        style="width: 50px " />
-                    </p:commandLink>
+                                     
                     
                      <span class="ui-separator"> <span
                             class="ui-icon ui-icon-grip-dotted-vertical" />
@@ -109,12 +93,7 @@
                          rows="15" 
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15,50,100"
-                         selection="#{sugestaoBean.sugestaoSelecionada}"
-                         selectionMode="single"
-                         rowKey="#{sugestao.id}">
-
-                <p:ajax event="rowSelect"  update=":fr:toolbar" />
-                <p:ajax event="rowUnselect"  update=":fr:toolbar"/>
+                         >
                 
                 <p:column width="50" 
                           style="text-align: center;" 
@@ -131,9 +110,7 @@
                     </p:commandLink>
                 </p:column>
 
-                <f:facet name="header">
-                    <div style="color: blue; font: bold;">Lista de Sugestões</div>
-                </f:facet>
+                
                 <h:inputHidden value="#{sugestao.id}" />
 
                 <p:column headerText="Data" width="110"
@@ -157,7 +134,30 @@
                 </p:column>
                 <p:column headerText="Observação"  style="text-align: center;">
                     <h:outputText value="#{sugestao.observacao}" />
-                </p:column>                  
+                </p:column> 
+                <p:column  width="50">
+                    <p:commandLink 
+                        id="teste"
+                        title="Responder"
+                        rendered="#{request.isUserInRole('ROLE_USUARIO_VIP')}"
+                        process="@this"
+                        update="@(.myStyle)"                     
+                        
+                        oncomplete="PF('atualizar-dialog').show()" >            
+                        
+                       <f:setPropertyActionListener target="#{sugestaoBean.sugestao}"
+                                                     value="#{sugestao}" /> 
+                        
+                        <f:setPropertyActionListener target="#{sugestaoBean.destinoSalvar}"
+                                                     value="#{sugestao}" />
+
+                         <p:resetInput target="fr:dialog-painel-atualizar" /> 
+                        <h:graphicImage library="imagens" name="editar.png"
+                                        style="width: 50px " />
+                        
+                    </p:commandLink>
+                    
+                </p:column>
 
             </p:dataTable>
 
@@ -182,7 +182,8 @@
                                      id="ass" 
                                      editable="true"  
                                      style="width: 300px"
-                                     label="Digite ou escolha um Assunto"                                     
+                                     label="Digite ou escolha um Assunto"    
+                                     
                                      >
                         <f:selectItem itemLabel="Selecione ou Digite o assunto" itemValue="" />
                         <f:selectItems value="#{sugestaoBean.assuntos}" 
@@ -216,6 +217,7 @@
                       resizable="false" 
                       closeOnEscape="true"
                       id="dialog-painel-atualizar" 
+                      styleClass="myStyle"
                        >   
                 
                 <p:graphicImage library="imagens" name="baner2.gif"
@@ -241,7 +243,7 @@
                                    value="Enviar"
                                    icon="ui-icon-circle-check"
                                    process="dialog-painel-atualizar"
-                                   update="messages painel tabela-vtr" 
+                                   update="messages painel tabela-vtr @(.myStyle)" 
                                    oncomplete="if (!args.validationFailed) PF('atualizar-dialog').hide()"/>
 
             </p:dialog>
