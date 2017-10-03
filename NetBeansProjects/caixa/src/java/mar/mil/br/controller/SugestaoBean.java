@@ -183,9 +183,7 @@ public class SugestaoBean {
         assuntos.add("Conforto");
         assuntos.add("Limpeza");
         assuntos.add("Força de Trabalho");
-        assuntos.add("Rancho");
         assuntos.add("Ativ_Administrativa");
-        assuntos.add("Ativ_Ensino");
         assuntos.add("Ativ_Esportiva");
         assuntos.add("Cerimônias");
         assuntos.add("Estacionamento");

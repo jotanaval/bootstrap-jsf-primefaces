@@ -14,7 +14,7 @@
                                      <intercept-url pattern="/protected/**" access="ROLE_USUARIO_VIP" />
                 
 		<form-login login-page="/publico/login.xhtml"
-			always-use-default-target="true" default-target-url="/home.xhtml"
+			always-use-default-target="true" default-target-url="/protected/administracao.xhtml"
 			authentication-failure-url="/publico/login.xhtml?login_error=1" />
 		<logout />
 		<remember-me />
