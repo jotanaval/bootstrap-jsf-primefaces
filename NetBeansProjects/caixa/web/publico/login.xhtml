@@ -12,11 +12,16 @@
     <h:body id="body">
        
         
-                         
-       <div id="divcenter">
+         
+            
+        <div id="divcenter" style="color: #045491">
+            
+            <p:fieldset><legend title="Autenticação"/>
+            
+            
            <h:graphicImage library="imagens" name="acess.jpg"
-                                        style="width: 90px " />
-        <h:panelGroup rendered="#{!empty param.login_error}">
+                                        style="width: 60px " />
+      <h:panelGroup rendered="#{!empty param.login_error}" >
             <span style="color: red"> Erro ao efetuar o login.</span>
             <br />
             <br />
@@ -47,7 +52,10 @@
            
         </form>
         <br></br>
+        </p:fieldset>
         </div>
+            
+            
     </h:body>
 </html>
 
