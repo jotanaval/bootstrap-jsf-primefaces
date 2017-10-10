@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<ui:composition template="/templates/interna.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="Titulo">Gerenciamento de Acesso Externo aos Servidores</ui:define>
+    <ui:define name="corpo">
+
+        
+        <h:form id="rel">
+            <p:dataTable id="table" 
+                         value="#{ipController.ips}"  
+                         class="table" 
+                         style="font-size: 13px;width: 95%"
+                         paginator="true" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"
+                         paginatorPosition="bottom"
+                         var="ip">
+                
+                <f:facet name="header"> Listagem de Solicitações</f:facet>
+                <f:facet name="footer">Final da listagem</f:facet>
+                
+                <p:column headerText="Solicitante"  style="text-align: center;" class="col-1">                    
+                    <h:outputText value="#{ip.nomeDoSolicitante}"/>   
+                </p:column>
+                
+                <p:column headerText="OM do Solicitante"  style="text-align: center;" class="col-1">                    
+                    <h:outputText value="#{ip.omSolicitante}"/>   
+                </p:column>
+                
+                               
+                <p:column headerText="Faixa "  style="text-align: center;" class="col-1">                    
+                    <h:outputText value="#{ip.faixaLiberada}"/>   
+                </p:column>                
+                
+                <p:column headerText="Data Solicitção"  style="text-align: center;" class="col-4">
+                    <h:outputText value="#{ip.dataSolicitacao}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" locale="pt" /></h:outputText>
+                </p:column>
+                
+                <p:column headerText="Data Vencimento" style="text-align: center;color: red" class="col-1">
+                    <h:outputText value="#{ip.dataVencimento}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" locale="pt" /></h:outputText>
+                </p:column> 
+                
+                <p:column headerText="Responsável CLTI" style="text-align: center;" class="col-1">
+                    <h:outputText value="#{ip.nomeDoCadastrante}"/>
+                </p:column> 
+                <p:column  
+                    style="text-align: center" 
+                    class="col-1"
+                    headerText="Alterar"> 
+                    <p:commandLink 
+                        action="#{ipController.alterar}"
+                        title="Alterar">
+                        <h:graphicImage library="images" name="editar16.png" width="30" height="30"/>
+                        <f:setPropertyActionListener target="#{ipController.alvo}"
+                                                     value="#{ip}"/>
+                        
+                        
+                        
+                    </p:commandLink>
+                </p:column>
+                
+                <p:column  style="text-align: center" 
+                           class="col-1"
+                           headerText="Remover"> 
+                    
+                    <p:commandLink action="#{ipController.remover()}"
+                                   update="table"                                   
+                                   title="Alterar"
+                                   onclick="if (!confirm('Confirma a exclusão ?'))
+                                               return false;">
+                                <h:graphicImage library="images" name="excluir.png" width="30" height="30"
+                                         />
+                                <f:setPropertyActionListener target="#{ipController.alvo}"
+                                                             value="#{ip}" />
+                    </p:commandLink>             
+                </p:column>
+                
+
+
+            </p:dataTable>
+        </h:form>
+       
+
+
+    </ui:define>
+</ui:composition>

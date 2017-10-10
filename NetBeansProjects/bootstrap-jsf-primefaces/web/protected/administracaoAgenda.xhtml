@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<ui:composition template="/templates/interna.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="Titulo">Gerenciamento de Acesso Externo aos Servidores</ui:define>
+    <ui:define name="corpo">
+
+       
+        <h:form id="rel">
+            <p:dataTable id="table" 
+                         value="#{agendaController.agendas}"  
+                          
+                         style="font-size: 13px"
+                         paginator="true" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"
+                         paginatorPosition="bottom"
+                         var="agenda">
+                
+                <f:facet name="header"> Listagem de Agenda Memória</f:facet>
+                <f:facet name="footer">Final da listagem</f:facet>
+                
+                <p:column headerText="Militar CLTI"  
+                          style="text-align: center;" 
+                          width="100">                    
+                    <h:outputText value="#{agenda.lancador}"/>   
+                </p:column>
+                
+                <p:column headerText="Executor"  
+                          style="text-align: center;" 
+                          width="100">                    
+                    <h:outputText value="#{agenda.executor}"/>   
+                </p:column>
+                
+                <p:column headerText="Tarefa"  
+                          style="text-align: center;"
+                          width="250" >                    
+                    <h:outputText value="#{agenda.faxina}"/>   
+                </p:column>
+                
+                <p:column headerText="Data da Solicitação"  
+                          style="text-align: center;" 
+                          width="80" >
+                    <h:outputText value="#{agenda.dataSolicitacao}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" locale="pt" /></h:outputText>
+                </p:column>
+                
+                <p:column headerText="Data da execução"  
+                          style="text-align: center;" 
+                          width="80" >
+                    <h:outputText value="#{agenda.dataExecFaxina}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" locale="pt" /></h:outputText>
+                </p:column>
+                
+                <p:column headerText="Solução "  
+                          style="text-align: center;" 
+                          width="250">                    
+                    <h:outputText value="#{agenda.solucaoImpl}"/>   
+                </p:column>
+                
+                <p:column headerText="Observações"  
+                          style="text-align: center;" 
+                          width="250" >                    
+                    <h:outputText value="#{agenda.observacaoes}"/>   
+                </p:column>
+                
+               
+                <p:column  
+                    style="text-align: center" 
+                    width="30"
+                    > 
+                    <p:commandLink 
+                        action="#{agendaController.alterar}"
+                        title="Alterar">
+                        <h:graphicImage library="images" name="editar16.png" width="30" height="30"/>
+                        <f:setPropertyActionListener target="#{agendaController.agenda}"
+                                                     value="#{agenda}"/>
+                        
+                    </p:commandLink>
+                </p:column>
+                
+                <p:column  style="text-align: center" 
+                           width="30"
+                          > 
+                    
+                    <p:commandLink action="#{agendaController.remover()}"
+                                   update="table"                                   
+                                   title="Alterar"
+                                   onclick="if (!confirm('Confirma a exclusão ?'))
+                                               return false;">
+                                <h:graphicImage library="images" name="excluir.png" width="30" height="30"
+                                         />
+                                <f:setPropertyActionListener target="#{agendaController.agenda}"
+                                                             value="#{agenda}" />
+                    </p:commandLink>             
+                </p:column>
+                
+
+
+            </p:dataTable>
+        </h:form>
+       
+
+
+    </ui:define>
+</ui:composition>

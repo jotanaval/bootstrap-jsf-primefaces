@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<ui:composition template="/templates/interna.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="Titulo">Gerenciamento Pessoal CLTI</ui:define>
+    <ui:define name="corpo">
+
+
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h1 style="color: #bd2130; text-align: center">Cadastro de Militares</h1></div>
+            </div>
+            <h:form id="rel">
+                <p:messages/>
+                <h:panelGrid columns="2" styleClass="form-group">
+
+                    <fieldset><legend style="color: #0062cc">Dados Pessoais</legend>
+                        <h:outputText/>  <h:outputText/> <h:outputText/>
+                        <h:outputLabel value = "Nome : " />
+                        <p:inputText value="#{militarController.militar.nome}" 
+                                     styleClass="form-control"
+                                     required="true" requiredMessage="Nome é Obrigatório"/>
+                            
+
+                        <h:outputLabel value = "Nip : " />
+                        <p:inputMask value="#{militarController.militar.nip}" styleClass="form-control" mask="99.9999.99" />                  
+
+
+                        <h:outputLabel value = "Identidade : " />
+                        <p:inputMask value="#{militarController.militar.identidade}" styleClass="form-control" mask="999.999-9" />
+
+                        <h:outputLabel value = "Endereço : " />
+                        <h:inputText value="#{militarController.militar.endereco}" styleClass="form-control" />
+
+                        <h:outputLabel value = "Celular : " />
+                        <p:inputMask value="#{militarController.militar.telCel}" styleClass="form-control" mask="(99)9999-9999" />
+
+                        <h:outputLabel value = "Telefone : " />
+                        <p:inputMask value="#{militarController.militar.telConvencional}" styleClass="form-control" mask="(99)9999-9999" />
+
+                        <h:outputLabel value = "Contado Familiar : " />
+                        <h:inputText value="#{militarController.militar.nomeFamiliar}" styleClass="form-control" />
+
+                        <h:outputLabel value = "Tel contato : " />
+                        <p:inputMask value="#{militarController.militar.telContato}" styleClass="form-control" mask="(99)9999-9999" />
+                    </fieldset>
+
+                    <fieldset><legend style="color: #0062cc">Inspeção de Saúde</legend>
+                        <h:outputText/>
+
+                        <h:outputLabel value = "Data da última IS : " />
+                        <p:calendar value="#{militarController.militar.dataUltima}" 
+                                    showOn="inline"
+                                    pattern="dd-MM-yyyy"
+                                    mask="true"
+                                    />
+
+                        <h:outputLabel value = "Válida até : " />
+                        <p:calendar value="#{militarController.militar.dataValidade}" 
+                                    showOn="inline"
+                                    pattern="dd-MM-yyyy"
+                                    mask="true"
+                                    />
+
+                    </fieldset>
+                    <fieldset><legend style="color: #0062cc">Tiro de Carreira</legend> 
+                        <h:outputText/>
+
+                        <h:outputLabel value = "Classe : " />
+                        <h:inputText value="#{militarController.militar.classeTiro}" styleClass="form-control" />
+
+                        <h:outputLabel value = "Pontuação : " />
+                        <h:inputText value="#{militarController.militar.pontuacao}" styleClass="form-control" />
+
+                        <h:outputLabel value = "Válido até : " />
+                        <p:calendar value="#{militarController.militar.dataVencimentoTiro}" 
+                                    showOn="inline"
+                                    pattern="dd-MM-yyyy"
+                                    mask="true"
+                                    />                  
+                    </fieldset>
+
+                    <fieldset><legend style="color: #0062cc">Capacitação Profissional</legend>
+                        <h:outputText/>
+
+                        <h:outputLabel value = "Cursos : " />
+                        <h:inputTextarea value="#{militarController.militar.cursos}" styleClass="form-control" />
+                    </fieldset>
+                    
+                    <h:inputHidden value="#{militarController.militar.id}"/>
+                    <h:outputText/>
+                </h:panelGrid>
+                <h:commandButton 
+                    action="#{militarController.salvar()}" 
+                    styleClass="btn btn-primary"
+                    value="Enviar"/>
+            </h:form>
+
+
+        </div>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<ui:composition template="/templates/interna.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="Titulo">Gerenciamento Material CLTI</ui:define>
+    <ui:define name="corpo">
+
+       
+        <h:form id="rel">
+            <p:dataTable id="table" 
+                         value="#{materialController.materiais}"  
+                         style="font-size: 13px"
+                         class="table"
+                         paginator="true" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"
+                         paginatorPosition="bottom"
+                         var="material">
+                <f:facet name="header"> Material do CLTI</f:facet>
+                <f:facet name="footer">Final da listagem</f:facet>
+                
+                <p:column headerText="NP"  style="text-align: center" width="60" >                    
+                    <h:outputText value="#{material.numeroMatricial}"/>   
+                </p:column>
+                
+                <p:column headerText="Descrição"  style="text-align: center" width="150" >
+                    <h:outputText value="#{material.descricao}"/>
+                </p:column>
+                <p:column headerText="Entrada" style="text-align: center;" width="60" >
+                    <h:outputText value="#{material.entradaOperacao}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" locale="pt" /></h:outputText>
+                </p:column> 
+                
+                <p:column headerText="Vida Útil" style="text-align: center;" width="60" >
+                    <h:outputText value="#{material.vidaUtil}"/>
+                </p:column>               
+
+                <p:column headerText="Situação" style="text-align: center" width="150">
+                    <h:outputText value="#{material.situacaoAtual}"/>
+                </p:column>
+                <p:column headerText="Valor" style="text-align: center" width="40" >
+                    <h:outputText value="#{material.valor}"/>
+                </p:column>
+                
+                <p:column headerText="Tipo" style="text-align: center" width="60" >
+                    <h:outputText value="#{material.tipo}"/>
+                </p:column>
+                
+                <p:column  
+                    style="text-align: center" 
+                    width="45"
+                    headerText="Alterar"> 
+                    <p:commandLink 
+                        action="#{materialController.alterar()}"
+                        title="Alterar">
+                        <h:graphicImage library="images" name="editar16.png" width="30" height="30"
+                                        style="border:2" />
+                        <f:setPropertyActionListener target="#{materialController.material}"
+                                                     value="#{material}" />
+                        <f:setPropertyActionListener target="#{materialController.destinoSalvar}"
+                                                     value="/protected/cadastroMat" />
+                    </p:commandLink>
+                </p:column>
+                
+                <p:column  style="text-align: center" 
+                           width="45"
+                           headerText="Remover"> 
+                    
+                    <p:commandLink action="#{materialController.excluir1()}"
+                                   update="table"
+                                   
+                                   title="Alterar"
+                                   onclick="if (!confirm('Confirma a exclusão do Material ?'))
+                                               return false;">
+                                <h:graphicImage library="images" name="excluir.png" width="30" height="30"
+                                        style="border:2" />
+                                <f:setPropertyActionListener target="#{materialController.material}"
+                                                     value="#{material}" />
+                    </p:commandLink>             
+                </p:column>
+                
+
+
+            </p:dataTable>
+        </h:form>
+        
+
+
+    </ui:define>
+</ui:composition>

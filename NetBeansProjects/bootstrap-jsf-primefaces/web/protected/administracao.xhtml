@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<ui:composition template="/templates/interna.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="Titulo">Gerenciamento Pessoal CLTI</ui:define>
+    <ui:define name="corpo">
+
+
+        <h:form id="rel">
+            
+            <p:dataTable value="#{militarController.militares}"  
+                         class="table" 
+                         style="font-size: 13px"
+                         paginator="true" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"
+                         paginatorPosition="bottom"
+                         id="table"
+                         var="militar">
+                <f:facet name="header"> Militares do CLTI</f:facet>
+                <f:facet name="footer">Final da listagem</f:facet>
+
+                <p:column headerText="Identificação"
+                          width="100"
+                          style="text-align: center;" >
+                    <ul style="text-align:left" class="list-group">
+                        <li class="list-group-item">Nome : <h:outputText value="#{militar.nome}"/></li>
+                        <li class="list-group-item">Nip : <h:outputText value="#{militar.nip}"/></li>
+                        <li class="list-group-item">ID : <h:outputText value="#{militar.identidade}"/></li>
+
+                    </ul>                     
+                </p:column>
+
+                <p:column headerText="Contato Familiar" 
+                          width="60"
+                          style="text-align: center;">
+                    <ul style="text-align: left" 
+                        class="list-group">
+                        <li class="list-group-item">   Nome : <h:outputText value="#{militar.nomeFamiliar}"/> </li>
+                        <li class="list-group-item"> Telefone : <h:outputText value="#{militar.telContato}"/></li>
+                    </ul>
+                </p:column>
+                <p:column headerText="Tiro" 
+                          width="60"
+                          style="text-align: center;" >
+                    <ul style="text-align: left" 
+                        class="list-group">
+                        <li class="list-group-item">   Classe : <h:outputText value="#{militar.classeTiro}"/> </li>
+                        <li style="color: red"
+                            class="list-group-item">   Válidade : <h:outputText 
+                                style="color: red" value="#{militar.dataVencimentoTiro}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" locale="pt" /> </h:outputText></li>                           
+                        <li class="list-group-item"> Pontuação : <h:outputText value="#{militar.pontuacao}"/></li>
+
+                    </ul>
+                </p:column> 
+
+                <p:column headerText="Inspeção Saúde"
+                          width="60"
+                          style="text-align: center;" >
+                    <ul style="text-align: left" 
+                        class="list-group">
+                        <li class="list-group-item">   Última IS : <h:outputText value="#{militar.dataUltima}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" locale="pt" /></h:outputText> </li>
+                        <li style="color: red"
+                            class="list-group-item">   Válidade : <h:outputText 
+                                style="color: red" value="#{militar.dataValidade}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" locale="pt" /></h:outputText></li>
+
+                    </ul>
+                </p:column>               
+
+                <p:column headerText="Cursos" 
+                          width="80"
+                          style="text-align: center" >
+                    <h:outputText value="#{militar.cursos}"/>
+                </p:column>
+                
+                <p:column  
+                    style="text-align: center" 
+                    width="10"                    
+                    headerText="Alterar"> 
+                    <p:commandLink 
+                        action="#{militarController.alterar()}"
+                        title="Alterar">
+                        <h:graphicImage library="images" 
+                                        name="editar16.png" width="30" height="30"
+                                        style="border:2" />
+                        <f:setPropertyActionListener target="#{militarController.militar}"
+                                                     value="#{militar}" />
+                        
+                    </p:commandLink>
+                </p:column>
+                
+                <p:column  style="text-align: center" 
+                           width="10"                           
+                           headerText="Remover"> 
+                    
+                    <p:commandLink action="#{militarController.excluir()}"
+                                   update="table"                                   
+                                   title="Remover"
+                                   onclick="if (!confirm('Confirma a exclusão do Militar ?'))
+                                               return false;">
+                                <h:graphicImage library="images" name="excluir.png" width="30" height="30"
+                                        style="border:2" />
+                                <f:setPropertyActionListener target="#{militarController.militar}"
+                                                     value="#{militar}" />
+                    </p:commandLink>             
+                </p:column>
+                
+
+
+            </p:dataTable>
+        </h:form>
+
+
+
+    </ui:define>
+</ui:composition>

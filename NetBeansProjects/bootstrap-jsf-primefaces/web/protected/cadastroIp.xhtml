@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<ui:composition template="/templates/interna.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<ui:define name="Titulo">Controle IP</ui:define>
+	<ui:define name="corpo">
+            
+            <h1 style="color: #0062cc; text-align: center">Cadastro de Ip</h1>
+            <div class="container">
+
+	        
+            <h:form id="rel">
+                <p:messages/>
+                <h:panelGrid columns="2" styleClass="form-group">
+                    <h:inputHidden value="#{ipController.alvo.ip_id}"/>
+                    <h:outputText/>
+                    
+                    <h:outputLabel value = "Solicitante : " />
+                    <p:inputText value="#{ipController.alvo.nomeDoSolicitante}" 
+                                 styleClass="form-control"
+                                 required="true" requiredMessage="Nome do Solicitante é Obrigatório!"/>
+                    
+                    <h:outputLabel value = "OM Solicitante : " />
+                    <h:inputText value="#{ipController.alvo.omSolicitante}" styleClass="form-control" />
+                    
+                    <h:outputLabel value = "Data Solicitação  :  " />
+                    <p:calendar value="#{ipController.alvo.dataSolicitacao}" 
+                                showOn="inline"
+                                pattern="dd-MM-yyyy"
+                                mask="true"
+                                />                    
+                                        
+                    <h:outputLabel value = "Data Vencimento  :  " />
+                    <p:calendar value="#{ipController.alvo.dataVencimento}" 
+                                showOn="inline"
+                                pattern="dd-MM-yyyy"
+                                mask="true"
+                                />
+                    
+                    <h:outputLabel value = "Faixa IP : " />
+                    <h:inputText value="#{ipController.alvo.faixaLiberada}" styleClass="form-control" />
+                    
+                    
+                </h:panelGrid>
+                <h:commandButton 
+                    action="#{ipController.salvar()}" 
+                    styleClass="btn btn-primary"
+                    value="Enviar"/>
+            </h:form>
+            
+            
+            </div>
+	</ui:define>
+</ui:composition>
